@@ -16,10 +16,17 @@ public class TestCycles {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String nodes[] = new String[10];
-		boolean adjMatrix[][] = new boolean[10][10];
+		if (args.length < 2) {
+			System.out.println("usage: de.normalisiert.utils.graphs.TestCycles num_vertices [v1,v2...]");
+			System.exit(1);
+		}
 
-		for (int i = 0; i < 10; i++) {
+		int num_vertices = Integer.parseInt(args[0]);
+
+		String nodes[] = new String[num_vertices];
+		boolean adjMatrix[][] = new boolean[num_vertices][num_vertices];
+
+		for (int i = 0; i < num_vertices; i++) {
 			nodes[i] = Integer.toString(i);
 		}
 
@@ -36,17 +43,12 @@ public class TestCycles {
 		adjMatrix[7][9] = true;
 		adjMatrix[9][6] = true;*/
 		
-        adjMatrix[0][1] = true;
-        adjMatrix[1][2] = true;
-        adjMatrix[2][0] = true; adjMatrix[2][6] = true;
-        adjMatrix[3][4] = true;
-        adjMatrix[4][5] = true; adjMatrix[4][6] = true;
-        adjMatrix[5][3] = true;
-        adjMatrix[6][7] = true;
-        adjMatrix[7][8] = true;
-        adjMatrix[8][6] = true;
-        
-        adjMatrix[6][1] = true;
+		for (int i = 1; i < args.length; i++) {
+			String[] vertices = args[i].split(",", 2);
+			int v1 = Integer.parseInt(vertices[0]);
+			int v2 = Integer.parseInt(vertices[1]);
+			adjMatrix[v1][v2] = true;
+		}
 
 		ElementaryCyclesSearch ecs = new ElementaryCyclesSearch(adjMatrix, nodes);
 		List cycles = ecs.getElementaryCycles();
