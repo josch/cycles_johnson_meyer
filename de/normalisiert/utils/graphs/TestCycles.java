@@ -20,7 +20,7 @@ public class TestCycles {
 		boolean adjMatrix[][] = new boolean[10][10];
 
 		for (int i = 0; i < 10; i++) {
-			nodes[i] = "Node " + i;
+			nodes[i] = Integer.toString(i);
 		}
 
 		/*adjMatrix[0][1] = true;
@@ -55,7 +55,7 @@ public class TestCycles {
 			for (int j = 0; j < cycle.size(); j++) {
 				String node = (String) cycle.get(j);
 				if (j < cycle.size() - 1) {
-					System.out.print(node + " -> ");
+					System.out.print(node + " ");
 				} else {
 					System.out.print(node);
 				}
