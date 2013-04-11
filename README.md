@@ -11,7 +11,7 @@ Usage
 -----
 
     make
-    java de.normalisiert.utils.graphs.TestCycles 4 0,1 0,2 1,0 1,3 2,0 3,0 3,1 3,2
+    echo "0 1\n0 2\n1 0\n1 3\n2 0\n3 0\n3 1\n3 2" | java de.normalisiert.utils.graphs.TestCycles 4
 
 First argument is the number of vertices. Subsequent arguments are ordered
 pairs of comma separated vertices that make up the directed edges of the
@@ -24,12 +24,13 @@ For simplicity, there is no DOT file parser included but the following allows
 to create a suitable argument string for simple DOT graphs.
 
 Given a DOT file of a simple (no labels, colors, styles, only pairs of
-vertices...) directed graph, the following line produces commandline
-arguments in the above format for that graph.
+vertices...) directed graph, the following lines generate the number of
+vertices as well as the edge list expected on standard input.
 
-	echo `sed -n -e '/^\s*[0-9]\+;$/p' graph.dot | wc -l` `sed -n -e 's/^\s*\([0-9]\) -> \([0-9]\);$/\1,\2/p' graph.dot`
+        sed -n -e '/^\s*[0-9]\+;$/p' graph.dot | wc -l
+        sed -n -e 's/^\s*\([0-9]\) -> \([0-9]\);$/\1 \2/p' graph.dot
 
-The above line works on DOT files like the following:
+The above lines work on DOT files like the following:
 
     digraph G {
       0;
@@ -42,6 +43,11 @@ The above line works on DOT files like the following:
       2 -> 1;
       }
 
-It would produce the following output:
+They would produce the following output:
 
-    3 0,1 0,2 1,0 2,0 2,1
+    3
+    0 1
+    0 2
+    1 0
+    2 0
+    2 1

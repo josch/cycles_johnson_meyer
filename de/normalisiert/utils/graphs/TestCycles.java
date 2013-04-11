@@ -2,6 +2,7 @@ package de.normalisiert.utils.graphs;
 
 
 import java.util.List;
+import java.io.*;
 
 
 /**
@@ -15,9 +16,9 @@ public class TestCycles {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		if (args.length < 2) {
-			System.out.println("usage: de.normalisiert.utils.graphs.TestCycles num_vertices [v1,v2...]");
+	public static void main(String[] args) throws java.io.IOException {
+		if (args.length != 1) {
+			System.out.println("usage: echo \"v1 v2\nv1 v3\n...\" | de.normalisiert.utils.graphs.TestCycles num_vertices");
 			System.exit(1);
 		}
 
@@ -43,8 +44,11 @@ public class TestCycles {
 		adjMatrix[7][9] = true;
 		adjMatrix[9][6] = true;*/
 		
-		for (int i = 1; i < args.length; i++) {
-			String[] vertices = args[i].split(",", 2);
+		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+		String line;
+
+		while ((line = stdin.readLine()) != null && line.length()!= 0) {
+			String[] vertices = line.split(" ", 2);
 			int v1 = Integer.parseInt(vertices[0]);
 			int v2 = Integer.parseInt(vertices[1]);
 			adjMatrix[v1][v2] = true;
